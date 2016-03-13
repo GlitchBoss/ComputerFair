@@ -105,7 +105,6 @@ public class GameManager : MonoBehaviour {
         {
             StopTimer();
             CheckAnswer(-1);
-            //timerText.text = "00";
             return;
         }
 		timer--;
