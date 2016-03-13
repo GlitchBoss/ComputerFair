@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour {
     public GameObject[] noteBtns;
     public GameObject[] strikeObjs;
     public GameObject finishPanel;
+	public GameObject title;
     public Text timerText;
     public Text strikeText;
     public Text finishText;

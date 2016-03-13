@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using UnityEngine.Analytics;
-using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	
@@ -28,6 +26,7 @@ public class GameManager : MonoBehaviour {
     Transform spawnPoint;
     int notesRestartNum = 5;
 	int numCorrect = 0;
+	bool firstTime = true;
 
 	public static GameManager instance;
     
@@ -37,6 +36,7 @@ public class GameManager : MonoBehaviour {
 			instance = this;
 		if (instance != this)
 			Destroy (gameObject);
+		//firstTime = true;
         StartUp();
 	}
 
@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour {
 				numCorrect = 0;
                 break;
             case "MainMenu":
+				UIM.title.SetActive(firstTime);
+				firstTime = false;
                 UIM.SetUpGas(gas);
                 currentCar = -1;
                 notesLeft = notesRestartNum;
