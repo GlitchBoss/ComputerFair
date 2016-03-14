@@ -158,7 +158,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/Dylan/Downloads/MusicalRace.keystore
+  AndroidKeystoreName: C:/Users/FamilyDesk/Google Drive/Games/Keystores/MusicalRace.keystore
   AndroidKeyaliasName: musicalrace
   AndroidTVCompatibility: 0
   AndroidIsGame: 1

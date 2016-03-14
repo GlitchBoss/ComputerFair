@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour {
     Transform spawnPoint;
     int notesRestartNum = 5;
 	int numCorrect = 0;
-	bool firstTime = true;
 
 	public static GameManager instance;
     
@@ -36,8 +35,7 @@ public class GameManager : MonoBehaviour {
 			instance = this;
 		if (instance != this)
 			Destroy (gameObject);
-		//firstTime = true;
-        StartUp();
+		StartUp();
 	}
 
     void OnLevelWasLoaded()
@@ -47,6 +45,10 @@ public class GameManager : MonoBehaviour {
 
 	void StartUp()
 	{
+		if (SceneManager.GetActiveScene().name == "TitlePage")
+		{
+			return;
+		}
 		hasStarted = false;
         gas = PlayerPrefs.GetInt("Gas", 0);
         UIM = GameObject.Find("UIManager").GetComponent<UIManager>();
@@ -61,8 +63,6 @@ public class GameManager : MonoBehaviour {
 				numCorrect = 0;
                 break;
             case "MainMenu":
-				UIM.title.SetActive(firstTime);
-				firstTime = false;
                 UIM.SetUpGas(gas);
                 currentCar = -1;
                 notesLeft = notesRestartNum;
