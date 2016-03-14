@@ -11,12 +11,15 @@ public class Finish : MonoBehaviour {
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+		//Find references
+		player = GameObject.FindGameObjectWithTag("Player").transform;
+
         width = _collider.size.x;
     }
 
     void Update()
     {
+		//Ensures the player can't go backward through the finish line
         if (!playerCol)
             return;
         if (player.position.x < transform.position.x - width / 2)

@@ -11,7 +11,9 @@ public class CountDown : MonoBehaviour
 
     void Start()
     {
-        text = GetComponent<Text>();
+		//Find references
+		text = GetComponent<Text>();
+
         StartCoroutine(Count());
     }
 

@@ -31,10 +31,13 @@ public class GameManager : MonoBehaviour {
     
 	void Awake()
 	{
+		//Ensure that there 
+		//is only one GameManager instance in the scene
 		if (instance == null)
 			instance = this;
 		if (instance != this)
 			Destroy (gameObject);
+
 		StartUp();
 	}
 
@@ -50,8 +53,12 @@ public class GameManager : MonoBehaviour {
 			return;
 		}
 		hasStarted = false;
-        gas = PlayerPrefs.GetInt("Gas", 0);
+
+		//Find references
+		gas = PlayerPrefs.GetInt("Gas", 0);
         UIM = GameObject.Find("UIManager").GetComponent<UIManager>();
+
+		//Take different actions depending on the current scene
         switch (SceneManager.GetActiveScene().name)
         {
 			case "BothClefs":
@@ -85,7 +92,9 @@ public class GameManager : MonoBehaviour {
 	public void StartGame()
 	{
         hasStarted = true;
-        string scene = SceneManager.GetActiveScene().name;
+
+		//Take different actions depending on the current scene
+		string scene = SceneManager.GetActiveScene().name;
         if(scene == "BothClefs" || scene == "TrebleClef" || scene == "BassClef")
         {
             NM.NewNote();
@@ -163,10 +172,13 @@ public class GameManager : MonoBehaviour {
             EndGame(true);
             yield break;
         }
+
+		//Clear any signs that were enabled
         foreach(GameObject go in noteBtns)
         {
             go.GetComponent<ButtonUtil>().ClearSigns();
         }
+
         NM.NewNote();
     }
 
@@ -186,17 +198,24 @@ public class GameManager : MonoBehaviour {
     public void LoseGas(int amount)
     {
         gas -= amount;
+
+		//Make sure that gas doesn't go above 100
+		//or below 0
         if (gas > 100)
             gas = 100;
         else if (gas < 0)
             gas = 0;
+
+		//Save the gas integer
         PlayerPrefs.SetInt("Gas", gas);
     }
 
     public void EndGame(bool hasWon)
     {
         hasStarted = false;
-        switch (SceneManager.GetActiveScene().name)
+
+		//Take different actions depending on the current scene
+		switch (SceneManager.GetActiveScene().name)
         {
             case "BothClefs":
                 if (hasWon)

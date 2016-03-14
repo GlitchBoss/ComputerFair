@@ -19,7 +19,8 @@ public class NoteManager : MonoBehaviour {
 
     void Start()
     {
-        notesList = new List<List<GameObject>>();
+		//Set references
+		notesList = new List<List<GameObject>>();
         notesList.Add(As);
         notesList.Add(Bs);
         notesList.Add(Cs);
@@ -53,6 +54,7 @@ public class NoteManager : MonoBehaviour {
     {
         letterToGuess = Random.Range(0, notesList.Count);
         note = Random.Range(0, notesList[letterToGuess].Count);
+		//Ensures the same note isn't showed twice in a row
         while(letterToGuess == lastNote)
             letterToGuess = Random.Range(0, 7);
         lastNote = letterToGuess;

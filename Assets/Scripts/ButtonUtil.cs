@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class ButtonUtil : MonoBehaviour {
@@ -8,6 +7,8 @@ public class ButtonUtil : MonoBehaviour {
     public GameObject incorrect;
 
     public GameObject[] selectCircles;
+
+	//All functions here are called by buttons
 
 	public void StartGame()
 	{

@@ -12,7 +12,8 @@ public class PlaceTracker : MonoBehaviour
 
     void Start()
     {
-        cars = FindObjectsOfType<AICar>();
+		//Find references
+		cars = FindObjectsOfType<AICar>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
@@ -20,6 +21,8 @@ public class PlaceTracker : MonoBehaviour
     {
         if (!GameManager.instance.hasStarted)
             return;
+
+		//Get the player's place
         foreach(AICar car in cars)
         {
             carsBehindOf += CheckPosition(car);
@@ -32,6 +35,7 @@ public class PlaceTracker : MonoBehaviour
 
     int CheckPosition(AICar car)
     {
+		//Check the position of the car compared to the player
         if(player.currentLap >= car.currentLap)
         {
             if (player.currentLap > car.currentLap)

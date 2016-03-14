@@ -14,7 +14,9 @@ public class FollowTarget : MonoBehaviour {
 
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+		//Find references
+		target = GameObject.FindGameObjectWithTag("Player").transform;
+
         if (target)
         {
             transform.position = target.position + offset;
@@ -27,6 +29,7 @@ public class FollowTarget : MonoBehaviour {
         {
             if (transform.position != target.position + offset)
             {
+				//Smooth follows the target
                 Vector3 destination = Vector3.SmoothDamp(transform.position,
                                                           target.position + offset,
                                                           ref velocity,

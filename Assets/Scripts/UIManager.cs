@@ -57,7 +57,8 @@ public class UIManager : MonoBehaviour {
 
     public void Finish(bool hasWon)
     {
-        switch (SceneManager.GetActiveScene().name)
+		//Take different actions depending on the current scene
+		switch (SceneManager.GetActiveScene().name)
         {
             case "BothClefs":
             case "TrebleClef":
