@@ -27,17 +27,18 @@ public class Player : MonoBehaviour {
     static float stoppingDistance = 1.5f;
 
     public void Finish()
-    {
+	{
+		currentLap++;
         if (currentLap >= laps)
         {
-            currentLap++;
+			//Finish the game
             finished = true;
             GameManager.instance.UIM.finishedCars.Add(gameObject);
             GameManager.instance.EndGame(place == 1);
         }
         else
         {
-            currentLap++;
+			//Update the laps text
             lapsText.text = string.Format("Lap {0}/{1}", currentLap.ToString(), laps.ToString());
         }
     }
@@ -47,7 +48,8 @@ public class Player : MonoBehaviour {
         hasStarted = true;
     }
 
-    void Start()
+	//Start is called when the script is enabled
+	void Start()
     {
 		//Find references
 		rb = GetComponent<Rigidbody2D>();
@@ -55,6 +57,7 @@ public class Player : MonoBehaviour {
         lapsText = GameObject.Find("Laps").GetComponent<Text>();
         placeText = GameObject.Find("Place").GetComponent<Text>();
 
+		//Set variables
         lapsText.text = string.Format("Lap 1/{0}", laps.ToString());
         placeText.text = "Place 5/5";
         finished = false;
@@ -64,7 +67,8 @@ public class Player : MonoBehaviour {
         hasStarted = false;
     }
 
-    void FixedUpdate()
+	//Update is called every frame
+	void Update()
     {
         if (!GameManager.instance.hasStarted || !hasStarted)
             return;
@@ -101,7 +105,8 @@ public class Player : MonoBehaviour {
 
     void NextWaypoint()
     {
-        if (currentWaypoint < waypoints.Length - 1)
+		//Set currentWaypoint to the next waypoint in line
+		if (currentWaypoint < waypoints.Length - 1)
             currentWaypoint++;
         else if (currentWaypoint >= waypoints.Length - 1)
             currentWaypoint = 0;
@@ -111,6 +116,7 @@ public class Player : MonoBehaviour {
 
     public void UpdateText()
     {
+		//Update the place text
         placeText.text = string.Format("Place {0}/5", place.ToString());
     }
 }

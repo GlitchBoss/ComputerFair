@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityStandardAssets.Utility;
 
 public class AICar : MonoBehaviour {
@@ -7,9 +6,6 @@ public class AICar : MonoBehaviour {
     public float minSpeed;
     public float maxSpeed;
     public float stoppingDistance;
-    public float rotateSpeed;
-    public Transform target;
-    public int laps;
     public int currentWaypoint;
     public int place;
     public int currentLap;
@@ -17,21 +13,25 @@ public class AICar : MonoBehaviour {
     [HideInInspector]
     public Vector2 distanceToWaypoint;
 
+    Transform target;
     WaypointCircuit waypointCircuit;
     Transform[] waypoints;
     Rigidbody2D rb;
     Vector2 targetPos;
+    int laps;
     bool finished;
     bool hasStarted = false;
     float moveSpeed;
 
-    void Start()
+	//Start is called when the script is enabled
+	void Start()
     {
 		//Find references
         waypointCircuit = GameObject.FindGameObjectWithTag("WaypointCircuit").GetComponent<WaypointCircuit>();
         rb = GetComponent<Rigidbody2D>();
         laps = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().laps;
 
+		//Set variables
         waypoints = waypointCircuit.Waypoints;
         currentWaypoint = 0;
         target = waypoints[currentWaypoint];
@@ -44,6 +44,9 @@ public class AICar : MonoBehaviour {
     {
         if (finished)
             return;
+
+		//Tell the GameManager you finished the race if
+		//you completed all laps
         if (currentLap >= laps)
         {
             finished = true;
@@ -60,7 +63,8 @@ public class AICar : MonoBehaviour {
         hasStarted = true;
     }
 
-    void Update()
+	//Update is called every frame
+	void Update()
     {
         if (!hasStarted)
             return;
@@ -85,11 +89,13 @@ public class AICar : MonoBehaviour {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
+		//Move the way your pointing
         rb.AddForce(gameObject.transform.right * moveSpeed);
     }
 
     void NextWaypoint()
     {
+		//Set currentWaypoint to the next waypoint in line
         try
         {
             if (currentWaypoint < waypoints.Length)

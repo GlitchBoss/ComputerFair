@@ -10,14 +10,16 @@ public class PlaceTracker : MonoBehaviour
 
     int carsBehindOf = 0;
 
-    void Start()
+	//Start is called when the script is enabled
+	void Start()
     {
 		//Find references
 		cars = FindObjectsOfType<AICar>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
-    void FixedUpdate()
+	//FixedUpdate is called every fixed framerate frame
+	void FixedUpdate()
     {
         if (!GameManager.instance.hasStarted)
             return;

@@ -17,9 +17,10 @@ public class NoteManager : MonoBehaviour {
     int lastNote;
     int note;
 
-    void Start()
+	//Start is called when the script is enabled
+	void Start()
     {
-		//Set references
+		//Set variables
 		notesList = new List<List<GameObject>>();
         notesList.Add(As);
         notesList.Add(Bs);
@@ -33,6 +34,8 @@ public class NoteManager : MonoBehaviour {
     public void NewNote()
     {
         GameManager.instance.StopTimer();
+
+		//Clear any notes that were enabled
         foreach(List<GameObject> list in notesList)
         {
             foreach(GameObject go in notesList[notesList.IndexOf(list)])
@@ -40,6 +43,8 @@ public class NoteManager : MonoBehaviour {
                 go.SetActive(false);
             }
         }
+
+		//Choose and show a random note
         ChooseRandomNote();
         ShowNote();
         GameManager.instance.StartTimer(timeToGuess);
@@ -47,14 +52,17 @@ public class NoteManager : MonoBehaviour {
 
     void ShowNote()
     {
+		//Show the chosen note
         notesList[letterToGuess][note].SetActive(true);
     }
 
     void ChooseRandomNote()
     {
+		//Choose a random note
         letterToGuess = Random.Range(0, notesList.Count);
         note = Random.Range(0, notesList[letterToGuess].Count);
-		//Ensures the same note isn't showed twice in a row
+
+		//Ensure the same note isn't showed twice in a row
         while(letterToGuess == lastNote)
             letterToGuess = Random.Range(0, 7);
         lastNote = letterToGuess;

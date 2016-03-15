@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Finish : MonoBehaviour {
 
@@ -9,15 +8,18 @@ public class Finish : MonoBehaviour {
     float width;
     Transform player;
 
-    void Start()
+	//Start is called when the script is enabled
+	void Start()
     {
 		//Find references
 		player = GameObject.FindGameObjectWithTag("Player").transform;
 
+		//Set variables
         width = _collider.size.x;
     }
 
-    void Update()
+	//Update is called every frame
+	void Update()
     {
 		//Ensures the player can't go backward through the finish line
         if (!playerCol)
@@ -28,8 +30,11 @@ public class Finish : MonoBehaviour {
             _collider.isTrigger = false;
     }
 
+	//OnTriggerEnter2D is called when the Collider2D col enters the trigger
 	void OnTriggerEnter2D(Collider2D col)
     {
+		//Tell the player or ai car
+		//that it crossed the finish line
         if (col.tag == "Player")
         {
             col.GetComponent<Player>().Finish();

@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour {
 
     public void IncorrectAnswer()
     {
+		//Tell the user which note was correct
         noteBtns[GameManager.instance.NM.letterToGuess]
             .GetComponent<ButtonUtil>().correct.SetActive(true);
         StartCoroutine("AddStrike");
@@ -32,11 +33,14 @@ public class UIManager : MonoBehaviour {
 
     IEnumerator AddStrike()
     {
+		//Add a strike and lose gas
         strikeNum++;
         strikeObjs[strikeNum - 1].SetActive(true);
         GameManager.instance.LoseGas(10);
+
         if(strikeNum == 3)
         {
+			//Wait for three seconds then end the game
             yield return new WaitForSeconds(3);
             GameManager.instance.EndGame(false);
             finishPanel.SetActive(true);
@@ -44,11 +48,14 @@ public class UIManager : MonoBehaviour {
             strikeText.text = "Strikes: " + strikeNum.ToString();
             yield break;
         }
+
+		//Choose a new note
         StartCoroutine(GameManager.instance.NewNote(false));
     }
 
     public void SetUpGas(int gas)
     {
+		//Set the gas slider to however much gas the user has
         gasSlider.value = gas;
         gasFill.color = Color.Lerp(Color.red, Color.green, (float)gas / 5);
         if (gas < GameManager.instance.gasToRace)
@@ -63,11 +70,13 @@ public class UIManager : MonoBehaviour {
             case "BothClefs":
             case "TrebleClef":
             case "BassClef":
+				//Set up the finish panel then show it
                 finishText.text = "Finished!";
                 strikeText.text = "Strikes: " + strikeNum.ToString();
                 finishPanel.SetActive(true);
                 break;
             case "Race":
+				//Set up the finish panel then show it
                 if (hasWon)
                 {
                     finishText.text = "You Win!";

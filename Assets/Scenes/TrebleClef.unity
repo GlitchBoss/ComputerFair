@@ -1168,6 +1168,7 @@ MonoBehaviour:
   - {fileID: 1095373406}
   - {fileID: 537841340}
   finishPanel: {fileID: 124432648}
+  title: {fileID: 0}
   timerText: {fileID: 1287519317}
   strikeText: {fileID: 33085286}
   finishText: {fileID: 985105827}
@@ -2483,7 +2484,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Finished!

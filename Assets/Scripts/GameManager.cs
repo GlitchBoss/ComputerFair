@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour {
 	int numCorrect = 0;
 
 	public static GameManager instance;
-    
+
+	//Awake is called when the script object is initialised
 	void Awake()
 	{
 		//Ensure that there 
@@ -41,17 +42,14 @@ public class GameManager : MonoBehaviour {
 		StartUp();
 	}
 
-    void OnLevelWasLoaded()
+	//OnLevelWasLoaded is called after a new scene was loaded
+	void OnLevelWasLoaded()
     {
         StartUp();
     }
 
 	void StartUp()
 	{
-		if (SceneManager.GetActiveScene().name == "TitlePage")
-		{
-			return;
-		}
 		hasStarted = false;
 
 		//Find references
@@ -64,19 +62,26 @@ public class GameManager : MonoBehaviour {
 			case "BothClefs":
 			case "TrebleClef":
 			case "BassClef":
-				notesRestartNum = notesLeft;
+				//Find references
 				NM = GameObject.Find ("NoteManager").GetComponent<NoteManager> ();
+				
+				//Set variables
+				notesRestartNum = notesLeft;
 				noteBtns = UIM.noteBtns;
 				numCorrect = 0;
                 break;
             case "MainMenu":
-                UIM.SetUpGas(gas);
+				//Set variables
+				UIM.SetUpGas(gas);
                 currentCar = -1;
                 notesLeft = notesRestartNum;
                 numCorrect = 0;
                 break;
             case "Race":
-                spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+				//Find references
+				spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+
+				//Spawn whichever car the player chose
                 try
                 {
                     Instantiate(playerCars[currentCar], 
@@ -93,7 +98,8 @@ public class GameManager : MonoBehaviour {
 	{
         hasStarted = true;
 
-		//Take different actions depending on the current scene
+		//Spawn a new note if your in the
+		//right scene
 		string scene = SceneManager.GetActiveScene().name;
         if(scene == "BothClefs" || scene == "TrebleClef" || scene == "BassClef")
         {
@@ -103,6 +109,8 @@ public class GameManager : MonoBehaviour {
 
 	public void StartTimer(float time)
 	{
+		//Set reset variables and start
+		//decreasing the time
 		timer = time;
 		timerResetNum = timer;
         UpdateText();
@@ -112,28 +120,34 @@ public class GameManager : MonoBehaviour {
 
 	void DecreaseTimeRemaining()
 	{
+		//Stop the timer if the time
+		//has run out
         if(timer <= 0)
         {
             StopTimer();
             CheckAnswer(-1);
             return;
         }
+
+		//Otherwise decrease the time
 		timer--;
 		UpdateText ();
 	}
 
 	void UpdateText()
 	{
+		//Show the current time
         string seconds = timer.ToString("00");
-		
 		if(UIM.timerText)
 			UIM.timerText.text = seconds;
 	}
 
 	public void StopTimer()
 	{
-        if (!hasStarted)
-            return;
+		if (!hasStarted)
+			return;
+
+		//Stop the timer and reset it
 		CancelInvoke ("DecreaseTimeRemaining");
 		CancelInvoke ("Flash");
 		hasStarted = false;
@@ -142,6 +156,8 @@ public class GameManager : MonoBehaviour {
 
     public void SetCar(int car)
     {
+		//Set the current car to
+		//the car selected
         currentCar = car;
     }
 
@@ -150,7 +166,11 @@ public class GameManager : MonoBehaviour {
 
         if (noteNum == NM.letterToGuess)
         {
+			//Tell the user that they
+			//answered correctly, then
+			//choose a new note
             correctSFX.Play();
+			LoseGas(-5);
             notesLeft--;
             numCorrect++;
 			UIM.numCorrectText.text = "Number Correct: " + numCorrect.ToString();
@@ -158,8 +178,12 @@ public class GameManager : MonoBehaviour {
             StartCoroutine(NewNote(notesLeft <= 0));
             return true;
         }
+
+		//Stop the timer
         if(noteNum != -1)
             StopTimer();
+
+		//Tell the user they answered wrong
         UIM.IncorrectAnswer();
         return false;
     }
@@ -169,6 +193,7 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(1.5f);
         if (end)
         {
+			//End the game
             EndGame(true);
             yield break;
         }
@@ -179,18 +204,13 @@ public class GameManager : MonoBehaviour {
             go.GetComponent<ButtonUtil>().ClearSigns();
         }
 
+		//Choose a new note
         NM.NewNote();
     }
 
-	IEnumerator RandomNote()
-	{
-		noteToGuess = Random.Range (1, 8);
-		yield return new WaitForSeconds (1);
-		notes [noteToGuess - 1].Play ();
-	}
-
 	IEnumerator RestartGame ()
 	{
+		//Wait for three seconds then restart the game
 		yield return new WaitForSeconds (3f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
@@ -218,42 +238,22 @@ public class GameManager : MonoBehaviour {
 		switch (SceneManager.GetActiveScene().name)
         {
             case "BothClefs":
-                if (hasWon)
-                {
-                    UIM.Finish(hasWon);
-                }
-                else {
-                    StartCoroutine(RestartGame());
-                }
-                notesLeft = notesRestartNum;
-                LoseGas(-20);
-                break;
             case "TrebleClef":
-                if (hasWon)
-                {
-                    UIM.Finish(hasWon);
-                }
-                else {
-                    StartCoroutine(RestartGame());
-                }
-                notesLeft = notesRestartNum;
-                LoseGas(-15);
-                break;
             case "BassClef":
-                if (hasWon)
-                {
-                    UIM.Finish(hasWon);
-                } else {
-                    StartCoroutine(RestartGame());
-                }
+				//Finish the game and reset variables
+                UIM.Finish(hasWon);
                 notesLeft = notesRestartNum;
-                LoseGas(-15);
                 break;
             case "Race":
+				//Find the player's place
                 Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
                 player.place = UIM.finishedCars.IndexOf(player.gameObject);
+
+				//Finish the game
                 UIM.Finish(player.place + 1 == 1);
                 hasStarted = false;
+
+				//Loose some gas
                 LoseGas(20);
                 break;
         }

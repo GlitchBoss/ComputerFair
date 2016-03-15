@@ -9,7 +9,8 @@ public class CountDown : MonoBehaviour
 
     Text text;
 
-    void Start()
+	////Start is called when the script is enabled
+	void Start()
     {
 		//Find references
 		text = GetComponent<Text>();
@@ -19,6 +20,8 @@ public class CountDown : MonoBehaviour
 
     IEnumerator Count()
     {
+		//Count down from three, then
+		//tell everyone to start the game
         text.text = "3";
         yield return new WaitForSeconds(1);
         text.text = "2";

@@ -12,7 +12,8 @@ public class FollowTarget : MonoBehaviour {
 
     float normSpeed;
 
-    void Start()
+	//Start is called when the script is enabled
+	void Start()
     {
 		//Find references
 		target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -23,13 +24,14 @@ public class FollowTarget : MonoBehaviour {
         }
     }
 
-    void FixedUpdate()
+	//FixedUpdate is called every fixed framerate frame
+	void FixedUpdate()
     {
         if (smooth)
         {
             if (transform.position != target.position + offset)
             {
-				//Smooth follows the target
+				//Smooth follow the target
                 Vector3 destination = Vector3.SmoothDamp(transform.position,
                                                           target.position + offset,
                                                           ref velocity,
