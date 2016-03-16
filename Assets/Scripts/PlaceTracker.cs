@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityStandardAssets.Utility;
+﻿//© Joshua Hendershot 2016
+using UnityEngine;
 
 public class PlaceTracker : MonoBehaviour
 {

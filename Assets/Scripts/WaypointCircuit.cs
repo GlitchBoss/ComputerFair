@@ -1,3 +1,4 @@
+//© Joshua Hendershot 2016
 using UnityEngine;
 
 namespace UnityStandardAssets.Utility

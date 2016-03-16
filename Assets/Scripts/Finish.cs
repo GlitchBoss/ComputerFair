@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿//© Joshua Hendershot 2016
+using UnityEngine;
 
 public class Finish : MonoBehaviour {
 

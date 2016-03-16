@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿//© Joshua Hendershot 2016
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ButtonUtil : MonoBehaviour {

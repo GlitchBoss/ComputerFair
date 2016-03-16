@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//© Joshua Hendershot 2016
+using UnityEngine;
 
 public class FollowTarget : MonoBehaviour {
 
